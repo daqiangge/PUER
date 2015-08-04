@@ -1,0 +1,25 @@
+//
+//  LQDataBackupState.m
+//  PUER
+//
+//  Created by admin on 15/6/2.
+//  Copyright (c) 2015年 com.dieshang.PUER. All rights reserved.
+//
+
+#import "LQDataBackupState.h"
+
+@implementation LQDataBackupState
+
++ (NSDictionary *)replacedKeyFromPropertyName
+{
+    return @{@"returnn":@"return"};
+}
+
+- (void)setInfo:(NSString *)info
+{
+    info = [info stringByReplacingOccurrencesOfString:@"/n" withString:@" "];
+    info = [info stringByReplacingOccurrencesOfString:@"/r" withString:@" "];
+    _info = info;
+}
+
+@end

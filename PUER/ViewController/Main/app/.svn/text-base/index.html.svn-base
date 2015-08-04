@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>普洱平台</title>
+    <meta name="description" content="普洱后台管理系统">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" contect="mArker, 252133226@qq.com" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="normalize.css">
+    <style type="text/css" media="screen">
+    body, html {
+        height: 100%;
+        width: 100%;
+        min-width: 320px;
+        overflow: hidden;
+        color: #fff;
+        font-size: 12px;
+    }
+    #wrap, #tab-container {
+        height: 100%;
+    }
+    #tab-content {
+        position: relative;
+        height: 100%;
+    }
+    .tab-panel {
+        display: none;
+    }
+    .tab-panel.active {
+        display: block;
+    }
+    .memtitle {
+        display: none;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 10px;
+    }
+    #wraperror {
+        display: block;
+        width: 160px;
+        height: 150px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -70px;
+        margin-left: -80px;
+    }
+    #wraperror div {
+        text-align: center;
+    }
+    #wraperror img {
+        margin-bottom: 10px;
+    }
+    .imgwrap {
+        margin-top: 10px;
+    }
+    .imgerror {
+        font-size: 13px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="wraperror" style="display:none">
+        <div class="imgwrap"><img src="iv_exception.png" width="80" height="80"></div>
+        <div class="imgerror"></div>
+    </div>
+    <div id="wrap" style="display:none">
+        <div id="tab-container">
+            <div id="tab-content">
+                <div id="chart-rem" class="tab-panel">
+                    <div class="memtitle">总内存<span id="mem"></span></div>
+                    <div id="rchart"></div>
+                </div>
+                <div id="chart-cpu" class="tab-panel">
+                    <div class="memtitle"><span id="cpu"></span></div>
+                    <div id="cchart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-2.1.1.min.js"></script>
+    <script src="highcharts.js"></script>
+    <script>
+    var A = {
+        time: 5000,
+        mT: 40,
+        mL: 30,
+        mR: 15,
+        mB: 25
+    },
+    cpuUsage, remUsage;
+
+    function pageLoaded ( url, sid, type, error, sdata ) {
+        A.url = url;
+        A.sid = sid;
+        A.type = type;
+        A.error = error;
+        A.sdata = sdata;
+        startLoad();
+    }
+
+    function stopCpuActivity () {
+        window.location.href = 'ios://stopCpuActivity';
+    }
+
+    function stopMemoryActivity () {
+        window.location.href = 'ios://stopMemoryActivity';
+    }
+
+    function startLoad () {
+        if ( getSession() ) {
+            if ( getType() === '1' ) {
+                $( '#chart-cpu' ).addClass( 'active' );
+                startCPU();
+            } else {
+                $( '#chart-rem' ).addClass( 'active' );
+                startMEM();
+            }
+            $( '#wrap' ).show();
+        }
+    }
+
+    Date.prototype.format = function ( format ) {
+
+        var o = {
+            'M+': this.getMonth() + 1, //month
+            'd+': this.getDate(), //day
+            'h+': this.getHours(), //hour
+            'm+': this.getMinutes(), //minute
+            's+': this.getSeconds(), //second
+            'q+': Math.floor( ( this.getMonth() + 3 ) / 3 ), //quarter
+            'S': this.getMilliseconds() //millisecond
+        };
+        if ( /(y+)/.test( format ) ) {
+            format = format.replace( RegExp.$1, ( this.getFullYear() + '' ).substr( 4 - RegExp.$1.length ) );
+        }
+        for ( var k in o )
+            if ( new RegExp( '(' + k + ')' ).test( format ) ) {
+                format = format.replace( RegExp.$1, RegExp.$1.length == 1 ? o[ k ] : ( '00' + o[ k ] ).substr( ( '' + o[ k ] ).length ) );
+            }
+        return format;
+    };
+
+    function findParameter ( name, url ) {
+        var href = url || window.location.href;
+        var parameters = href.split( '?' )[ 1 ];
+        var parametersList =  parameters.split( '&' );
+        for ( var i = 0; i < parametersList.length; i++ ) {
+            var l = parametersList[ i ].split( '=' );
+            if ( l[ 0 ] == name ) return l[ 1 ];
+        }
+    }
+
+    function getSession () {
+        return A.sid || ( A.sid = findParameter( 'sid' ) ) || '';
+    }
+
+    function getUrl () {
+        return A.url || ( A.url = findParameter( 'url' ) ) || '';
+    }
+
+    function getType () {
+        return A.type || ( A.type = findParameter( 'type' ) ) || '';
+    }
+
+    function formatNum ( strNum ) {
+
+        if ( strNum.length <= 3 ) {
+            return strNum;
+        }
+        if ( !/^(\+|-)?(\d+)(\.\d+)?$/.test( strNum ) ) {
+            return strNum;
+        }
+        var a = RegExp.$1,
+            b = RegExp.$2,
+            c = RegExp.$3;
+        var re = new RegExp();
+        re.compile( "(\\d)(\\d{3})(,|$)" );
+        while ( re.test( b ) ) {
+            b = b.replace( re, "$1,$2$3" );
+        }
+        return a + "" + b + "" + c;
+    };
+
+    function toJSON ( json ) {
+        try {
+            json = json.replace( /(\r\n)/g, '' );
+            json = json.replace( /(\n)/g, '\\n' );
+            json = eval( '(' + json + ')' )
+            return json;
+        } catch ( e ) {
+            return json;
+        }
+    }
+
+    function cryFace () {
+        $( '#wraperror' ).show();
+        if ( A.error ) {
+            $( '.imgerror' ).html( A.error );
+        }
+    }
+
+    function doAjax ( url, args, success, complete, error ) {
+　
+        return $.ajax( {
+            url: url,
+            data: args,
+            type: args ? 'post' : 'get',
+            success: function ( data, textStatus, xhr ) {
+                textData = data;
+                data = toJSON( data );
+                if ( typeof data === 'object' && data[ 'state' ][ 'return' ] === 'true' ) {
+                    success.call( this, data, textData );
+                } else {
+                    if ( typeof error === 'function' ) {
+                        error.call( this, 'error', data );
+                    }
+                }
+            },
+            error: function ( xhr, textStatus, errorThrown ) {
+                if ( typeof error === 'function' ) {
+                    error.call( this, textStatus );
+                }
+            },
+            complete: function ( xhr, textStatus ) {
+                if ( typeof complete === 'function' ) {
+                    complete.call( this, xhr, textStatus );
+                }
+            }
+        } );
+    }
+
+    function startCPU () {
+        doAjax( getUrl() + '/adminmanager/do/system/getdeviceinfo.do?_=' + + new Date() + ';sessionid=' + getSession(), null, function ( data ) {
+            cpucount = data[ 'data' ][ 'cpucount' ];
+            memorysize = data[ 'data' ][ 'memorysize' ];
+            $( '#cpu' ).text( cpucount + '核' );
+            $( '.memtitle' ).show();
+            A.cChart = cpuChart( A.sdata || [] );
+            if ( !A.sdata ) {
+                doAjax( getUrl() + '/adminmanager/do/system/getcpuusagelist.do?_=' + + new Date() + ';sessionid=' + getSession(), {
+                    cpuIndex: cpucount
+                }, function ( data ) {
+                    A.cChart.series[ 0 ].setData( data[ 'usagelist' ] );
+                    getUsage();
+                       stopCpuActivity();
+                } );
+            }
+            else {
+               getUsage();
+               stopCpuActivity();
+            }
+        }, function () {} , function () {
+            stopCpuActivity();
+            cryFace();
+        } );
+
+        function getUsage () {
+            cpuUsage = doAjax( getUrl() + '/adminmanager/do/system/getcpuusage.do?_=' + + new Date() + ';sessionid=' + getSession(), {
+                cpuIndex: cpucount
+            }, function ( data ) {
+                var y = Math.round( data[ 'data' ][ 'usage' ] * 100 ) / 100;
+                A.cChart.series[ 0 ].addPoint( y || 0, true, true );
+            }, function () {
+                cpuUsage = null;
+                A.ctime = setTimeout( function () {
+                    getUsage();
+                }, A.time );
+            } );
+        }
+    }
+
+    function memorys ( memorysize ) {
+        var count = memorysize / 1024;
+        for ( var i = 0; Math.abs( count - i ) > 128; i += 256 );
+        return i > 1024 ? i / 1024 + 'GB' : i + 'MB';
+    }
+
+    function startMEM () {
+        doAjax( getUrl() + '/adminmanager/do/system/getdeviceinfo.do?_=' + + new Date() + ';sessionid=' + getSession(), null, function ( data ) {
+            memorysize = data[ 'data' ][ 'memorysize' ];
+            $( '#mem' ).text( memorys( memorysize ) );
+            $( '.memtitle' ).show();
+            A.rChart = remChart( A.sdata || [] );
+            if ( !A.sdata ) {
+                doAjax( getUrl() + '/adminmanager/do/system/getmemorysizelist.do?_=' + + new Date() + ';sessionid=' + getSession(), null, function ( data ) {
+                    A.rChart.series[ 0 ].setData( data[ 'memorylist' ] );
+                    getUsage();
+                       stopMemoryActivity();
+                } );
+            }
+            else {
+               getUsage();
+               stopMemoryActivity();
+            }
+        }, function () {} , function () {
+            stopMemoryActivity();
+            cryFace();
+        }  );
+
+        function getUsage () {
+            remUsage = doAjax( getUrl() + '/adminmanager/do/system/getmemorysize.do?_=' + + new Date() + ';sessionid=' + getSession(), null, function ( data ) {
+                var y = data[ 'data' ][ 'memory' ];
+                A.rChart.series[ 0 ].addPoint( y || 0, true, true );
+            }, function () {
+                remUsage = null;
+                A.rtime = setTimeout( function () {
+                    getUsage();
+                }, A.time );
+            } );
+        }
+    }
+
+    function remChart ( rem ) {
+        return new Highcharts.Chart( {
+            chart: {
+                renderTo: document.getElementById( 'rchart' ),
+                type: 'spline',
+                backgroundColor: 'transparent',
+                borderRadius: 0,
+                marginRight: A.mR,
+                marginBottom: A.mB,
+                marginLeft: A.mL,
+                marginTop: A.mT,
+                height: $( '#tab-content' ).height(),
+                width: $( '#tab-content' ).width(),
+                style: {
+                    fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif',
+                    fontSize: '12px',
+                    color: '#ffffff'
+                }
+            },
+            title: {
+                text: '内存曲线图',
+                style: {
+                    color: '#ffffff',
+                    fontSize: '13px'
+                }
+            },
+            xAxis: {
+                type: 'datetime',
+                lineWidth: 1,
+                lineColor: '#ffffff',
+                gridLineWidth: 0.5,
+                gridLineColor: '#ffffff',
+                tickInterval: 120 * 1000,
+                tickLength: 5,
+                tickColor: '#ffffff',
+                labels: {
+                    formatter: function () {
+                        var d = new Date( this.value ),
+                            m = d.format( 'mm' ),
+                            mint = parseFloat( m );
+                        if ( !isNaN( mint ) && mint % 5 === 0 ) {
+                            return d.format( 'hh:mm' );
+                        } else {
+                            return '';
+                        }
+                    },
+                    style: {
+                        color: '#ffffff',
+                        fontSize: '8px'
+                    }
+                }
+            },
+            yAxis: [ {
+                lineWidth: 1,
+                lineColor: '#ffffff',
+                gridLineColor: '#ffffff',
+                gridLineWidth: 0.5,
+                title: {
+                    text: '(MB)',
+                    align: 'high',
+                    offset: -30,
+                    y: -10,
+                    rotation: 0,
+                    style: {
+                        color: '#ffffff',
+                        fontSize: '10px'
+                    }
+                },
+                labels: {
+                    x: -5,
+                    formatter: function () {
+                        if ( this.value < 0 ) {
+                            return '';
+                        }
+                        return formatNum( this.value / 1000 )/* + 'MB'*/;
+                    },
+                    style: {
+                        color: '#ffffff',
+                        fontSize: '8px'
+                    }
+                },
+                minRange: 50 * 1024
+            } ],
+            tooltip: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    enableMouseTracking: false,
+                    color: '#34495e',
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [ 0, '#34495e' ],
+                            [ 1, Highcharts.Color( '#34495e' ).setOpacity( 0 ).get( 'rgba' ) ]
+                        ]
+                    },
+                    lineWidth: 0,
+                    marker: {
+                        enabled: false
+                    },
+                    shadow: false,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            series: [ {
+                type: 'area',
+                name: '进程占用内存',
+                data: rem || [],
+                pointStart: ( ( new Date() ).getTime() - 30 * 1000 * 60 ),
+                pointInterval: 5 * 1000
+            } ]
+        } );
+    }
+
+    function cpuChart ( cpu ) {
+        for ( var i = 0; i < cpu.length; i++ ) {
+            cpu[ i ] = parseFloat( cpu[ i ] );
+        }
+        return new Highcharts.Chart( {
+            chart: {
+                renderTo: document.getElementById( 'cchart' ),
+                type: 'spline',
+                backgroundColor: 'transparent',
+                borderRadius: 0,
+                marginRight: A.mR,
+                marginBottom: A.mB,
+                marginLeft: A.mL,
+                marginTop: A.mT,
+                height: $( '#tab-content' ).height(),
+                width: $( '#tab-content' ).width(),
+                style: {
+                    fontFamily: '"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif',
+                    fontSize: '12px',
+                    color: '#ffffff'
+                }
+            },
+            title: {
+                text: 'CPU曲线图',
+                style: {
+                    color: '#ffffff',
+                    fontSize: '13px'
+                }
+            },
+            xAxis: {
+                type: 'datetime',
+                lineWidth: 1,
+                lineColor: '#ffffff',
+                gridLineWidth: 0.5,
+                gridLineColor: '#ffffff',
+                tickInterval: 120 * 1000,
+                tickLength: 5,
+                tickColor: '#ffffff',
+                labels: {
+                    formatter: function () {
+                        var d = new Date( this.value ),
+                            m = d.format( 'mm' ),
+                            mint = parseFloat( m );
+                        if ( !isNaN( mint ) && mint % 5 == 0 ) {
+                            return new Date( this.value ).format( 'hh:mm' );
+                        } else {
+                            return '';
+                        }
+                    },
+                    style: {
+                        color: '#ffffff',
+                        fontSize: '8px',
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '(%)',
+                    align: 'high',
+                    offset: -20,
+                    y: -10,
+                    rotation: 0,
+                    style: {
+                        color: '#ffffff',
+                        fontSize: '10px'
+                    }
+                },
+                lineWidth: 1,
+                gridLineWidth: 0.5,
+                lineColor: '#ffffff',
+                gridLineColor: '#ffffff',
+                plotLines: [ {
+                    value: 0,
+                    width: 1,
+                    color: '#51911f'
+                } ],
+                labels: {
+                    x: -5,
+                    formatter: function () {
+                        return this.value >= 0 && this.value <= 100 ? this.value /*+ '%'*/ : '';
+                    },
+                    style: {
+                        color: '#ffffff',
+                        fontSize: '8px'
+                    }
+                },
+                minRange: 30,
+                min: 0,
+                max: 100
+            },
+            tooltip: {
+                enabled: false
+            },
+            plotOptions: {
+                spline: {
+                    enableMouseTracking: false,
+                    marker: {
+                        enabled: false
+                    },
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    lineWidth: 1,
+                    color: '#34495e'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            series: [ {
+                name: 'CPU使用率',
+                data: cpu || [],
+                pointStart: ( ( new Date() ).getTime() - 30 * 1000 * 60 ),
+                pointInterval: 5 * 1000
+            } ]
+        } );
+    }
+    </script>
+</body>
+
+</html>

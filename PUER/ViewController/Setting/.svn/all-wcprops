@@ -1,0 +1,233 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting
+END
+VersionViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/VersionViewController.m
+END
+MailboxSettingViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/MailboxSettingViewController.m
+END
+ContactSettingViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/ContactSettingViewController.m
+END
+LQResourcesTableViewCell.xib
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesTableViewCell.xib
+END
+LQResourcesTableViewController.xib
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesTableViewController.xib
+END
+LQResourcesTableViewCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesTableViewCell.h
+END
+LQResourcesTableViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesTableViewController.h
+END
+LQResourcesTableViewCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesTableViewCell.m
+END
+LQResourcesTableViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesTableViewController.m
+END
+FTPSettingViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/FTPSettingViewController.h
+END
+PwdSettingViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/PwdSettingViewController.h
+END
+FTPSettingViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/FTPSettingViewController.m
+END
+PwdSettingViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/PwdSettingViewController.m
+END
+LQNullDataTableViewCell.xib
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQNullDataTableViewCell.xib
+END
+LQPreviewVC.xib
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQPreviewVC.xib
+END
+LQResourcesFolder.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesFolder.h
+END
+LQNullDataTableViewCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQNullDataTableViewCell.h
+END
+FirstCreateGestureLockVC.xib
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/FirstCreateGestureLockVC.xib
+END
+LQPreviewVC.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQPreviewVC.h
+END
+LQResourcesFile.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesFile.h
+END
+LQResourcesFolder.m
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesFolder.m
+END
+LQResourcesViewTBV.xib
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesViewTBV.xib
+END
+LQNullDataTableViewCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQNullDataTableViewCell.m
+END
+FirstCreateGestureLockVC.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/FirstCreateGestureLockVC.h
+END
+LQPreviewVC.m
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQPreviewVC.m
+END
+LQResourcesFile.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesFile.m
+END
+SettingViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/SettingViewController.h
+END
+LQResourcesViewTBV.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesViewTBV.h
+END
+LockSettingVC.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LockSettingVC.h
+END
+FirstCreateGestureLockVC.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/FirstCreateGestureLockVC.m
+END
+SettingViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/SettingViewController.m
+END
+SystemSettingViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/SystemSettingViewController.h
+END
+LQResourcesViewTBV.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LQResourcesViewTBV.m
+END
+LockSettingVC.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/LockSettingVC.m
+END
+VersionViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/VersionViewController.h
+END
+SystemSettingViewController.m
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/SystemSettingViewController.m
+END
+MailboxSettingViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/MailboxSettingViewController.h
+END
+ContactSettingViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/Puer/!svn/ver/1884/APP/IOS/PUER/PUER/ViewController/Setting/ContactSettingViewController.h
+END

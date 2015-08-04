@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>普洱平台</title>
+  <meta name="description" content="普洱后台管理系统">
+  <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=12.0" name="viewport" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="author" contect="mArker, 252133226@qq.com" />
+
+  <link rel="stylesheet" type="text/css" href="bootstrap.css">
+  <style type="text/css">
+  .table-head-number {
+    min-width: 50px;
+    width: 50px;
+  }
+  .table {
+     margin-bottom: 0;
+  }
+  .table td, .table th {
+    white-space: nowrap;
+  }
+  .rt_w {
+    border: 1px solid #dddddd;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+  }
+  .all_info {
+    color: red;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="wrap" style="display:none">
+    <div id="tablewrap"></div>
+  </div>
+  <script src="underscore.js"></script>
+  <script src="table.js"></script>
+  <script>
+  'use strict';
+// var data = {
+//    "state": {
+//     "return": "true",
+//     "info": "",
+//     "code": ""
+//    },
+//    "data": {
+//     "recordsetlist": [
+//      {
+//       "hasmore": false,
+//       "fieldlist": [
+//        "userid","email","firstname","lastname","status","addr1","addr2","city","state","zip","country","phone"],
+//       "state": "open",
+//       "rowcount": 15,
+//       "rowlist": [
+//        [
+//         "3333","2378009277@qq.com","die","shang","ok","安镇","东北塘","无锡","江苏","214100","中国","15015015150"],[
+//         "5555","55555@qq.com","5555","5555","ok","123456","654321","ff","ff","123456","ff","123456"],[
+//         "aaaa","hjjhong@163.com","hong","jiajia","ok","aaa","bbb","wuxi","jiangsu","224400","china","13513613712"],[
+//         "ACID","acid@yourdomain.com","ABC","XYX","OK","901 San Antonio Road","MS UCUP02-206","Palo Alto","CA","94303","USA","555-555-5555"],[
+//         "dd","ddsss@qq.com","dd","dd","ok","werw","eqq","erw","wrew","12342","gegeger","123456789"],[
+//         "die","2378009277@qq.com","die","shang","ok","安镇","东北塘","无锡","江苏","214100","中国","15015015150"],[
+//         "die123","2378009277@qq.com","die","shang","ok","安镇","东北塘","无锡","江苏","214100","中国","18061906776"],[
+//         "die1232","2378009277@qq.com","die","shang","ok","安镇","东北塘","无锡","江苏","214100","中国","18061906776"],[
+//         "die1234","2378009277@qq.com","die","shang","ok","安镇","东北塘","无锡","江苏","214100","中国","18061906776"],[
+//         "die12we","2378009277@qq.com","die","shang","ok","安镇","东北塘","无锡","江苏","214100","中国","18061906776"],[
+//         "ds","hjjhong@163.com","hong","jiajia","ok","aaa","bbb","wuxi","jiangsu","224400","china","13513613712"],[
+//         "dshang","2378009277@qq.com","蝶尚","软件","ok","锡山区","","无锡","江苏","214100","中国","15015015150"],[
+//         "P","puerpuer@qq.com","puer","puer","ok","恒田","东北塘","无锡","123","2222222","中国","12345678901"],[
+//         "puer","2378009277@qq.com","die","shang","ok","กรุงเทพฯ","Αθήνα","امارات","चालीस","214100","中国","18061906776"],[
+//         "q","adsfsdfa@qq.com","q","q","ok","q","q","q","q","123","q","1234"]]
+//      }],
+//     "executetime": 46
+//    }
+//   };
+
+    var
+    str1 = '（共影响%s行）',
+    str2 = '（共影响%s行，因数据量偏大还有更多无法显示）',
+    str3 = '（累计执行时间%s毫秒）'
+
+    function arrayObject ( list ) {
+      var obj = {};
+      _.each( list, function  ( v, k ) {
+        obj[ '_' + k ] = list[ k ];
+      } );
+      return obj;
+    }
+
+
+    function showResult ( data ) {
+      data = data.data;
+      var df = document.createDocumentFragment(),
+      allinfo = document.createElement( 'div' );
+      allinfo.className = 'all_info';
+      allinfo.innerHTML = str3.replace( '%s', data.executetime );
+
+      _.each( data.recordsetlist, function  ( line, index, list ) {
+        var resultset = [], ele, head, info;
+        if ( line.state == 'open' ) {
+          _.each( line.rowlist, function  ( item ) {
+            resultset.push( arrayObject( item ) );
+          } );
+          head = arrayObject( line.fieldlist );
+          ele = document.createElement( 'div' );
+          ele.id = 'sql_' + index;
+          ele.className = 'pull-left rt_w';
+          info = document.createElement( 'div' );
+          info.id = 'info_' + index;
+          info.setAttribute( 'style', 'clear:both' );
+          info.innerHTML = ( line ? str1 : str2 ).replace( '%s', line.rowcount );
+          df.appendChild( ele );
+          df.appendChild( info );
+          showResultTable( ele, head, resultset );
+        }
+      } );
+      
+      while ( tablewrap.firstChild ) {
+          tablewrap.removeChild( tablewrap.firstChild );
+      }
+      df.appendChild( allinfo );
+      tablewrap.appendChild( df );
+    }
+
+
+    function showResultTable ( ele, head, resultset ) {
+      Table( {
+        data: resultset,
+        elem: ele,
+        head: head
+      } );
+    }
+
+    // showResult( data.data );
+    wrap.removeAttribute( 'style' );
+  </script>
+</body>
+
+</html>

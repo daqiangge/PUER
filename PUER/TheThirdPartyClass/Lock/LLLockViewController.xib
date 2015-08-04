@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LLLockViewController">
+            <connections>
+                <outlet property="indecator" destination="orT-dI-fHQ" id="y4n-7w-qzj"/>
+                <outlet property="lockview" destination="EmR-0o-eRR" id="ZPo-wE-rfu"/>
+                <outlet property="logoImageView" destination="bqh-vH-zuo" id="5AE-1U-UmQ"/>
+                <outlet property="tipLable" destination="sEp-bd-bFa" id="3nJ-Ue-Cg5"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uoD-5E-K7F" userLabel="background">
+                    <rect key="frame" x="140" y="92" width="320" height="416"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bqh-vH-zuo">
+                            <rect key="frame" x="120" y="10" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="7fB-l5-gCK"/>
+                                <constraint firstAttribute="height" constant="80" id="Syr-X2-tpd"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入解锁密码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="sEp-bd-bFa">
+                            <rect key="frame" x="85" y="110" width="150" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="JeK-2r-muL"/>
+                                <constraint firstAttribute="width" constant="150" id="oH1-Ze-tXt"/>
+                            </constraints>
+                            <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EmR-0o-eRR" customClass="LLLockView">
+                            <rect key="frame" x="20" y="135" width="280" height="280"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="280" id="5SJ-97-DjI"/>
+                                <constraint firstAttribute="height" constant="280" id="MgW-AF-Djb"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="orT-dI-fHQ" customClass="LLLockIndicator">
+                            <rect key="frame" x="140" y="60" width="40" height="40"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="62K-uC-5SZ"/>
+                                <constraint firstAttribute="height" constant="40" id="ihV-wn-deP"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="0fF-dG-fxz"/>
+                        <constraint firstAttribute="height" constant="416" id="12M-oH-QOH"/>
+                        <constraint firstItem="sEp-bd-bFa" firstAttribute="top" secondItem="orT-dI-fHQ" secondAttribute="bottom" constant="10" id="6zc-sR-Aio"/>
+                        <constraint firstItem="sEp-bd-bFa" firstAttribute="top" secondItem="bqh-vH-zuo" secondAttribute="bottom" constant="20" id="8qA-Yr-KMi"/>
+                        <constraint firstAttribute="centerX" secondItem="bqh-vH-zuo" secondAttribute="centerX" id="Fta-O0-aSr"/>
+                        <constraint firstAttribute="centerX" secondItem="EmR-0o-eRR" secondAttribute="centerX" id="OoP-Rv-Bwq"/>
+                        <constraint firstItem="EmR-0o-eRR" firstAttribute="top" secondItem="sEp-bd-bFa" secondAttribute="bottom" constant="10" id="Swe-qG-5d6"/>
+                        <constraint firstItem="sEp-bd-bFa" firstAttribute="top" secondItem="uoD-5E-K7F" secondAttribute="top" constant="-64" id="axx-j0-hlQ"/>
+                        <constraint firstAttribute="centerX" secondItem="sEp-bd-bFa" secondAttribute="centerX" id="cmA-bU-NPp"/>
+                        <constraint firstAttribute="centerX" secondItem="orT-dI-fHQ" secondAttribute="centerX" id="eUQ-cs-3Po"/>
+                        <constraint firstItem="bqh-vH-zuo" firstAttribute="top" secondItem="uoD-5E-K7F" secondAttribute="top" constant="10" id="o1W-HA-VOt"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="axx-j0-hlQ"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="uoD-5E-K7F" secondAttribute="centerX" id="VxF-nG-zvJ"/>
+                <constraint firstAttribute="centerY" secondItem="uoD-5E-K7F" secondAttribute="centerY" id="k5y-d8-NCm"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="87" y="248"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="logo.png" width="180" height="180"/>
+    </resources>
+</document>

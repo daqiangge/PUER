@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>普洱平台</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="普洱后台管理系统">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="author" contect="mArker, 252133226@qq.com" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="normalize.css">
+    <style type="text/css" media="screen">
+    body, html {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        color: #fff;
+        font-size: 17px;
+    }
+    #wrap {
+        display: block;
+        width: 160px;
+        height: 150px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -70px;
+        margin-left: -80px;
+    }
+    #wrap div {
+        text-align: center;
+    }
+    #wrap img {
+        margin-bottom: 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div><img src="iv_exception.png" width="80" height="80"></div>
+        <div>
+            <script>
+                document.write( decodeURI( document.location.hash.replace( /^#/, '' ) ) );
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
